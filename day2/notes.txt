@@ -1,6 +1,0 @@
-create a file called server.js
-create a node project
-npm init 
-    // fill all the relevent details
-npm install express --save
-create a server project using express
