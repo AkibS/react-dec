@@ -4,3 +4,13 @@ npm init
     // fill all the relevent details
 npm install express --save
 create a server project using express
+
+++++++++++++++++++++++++++++++++++++++++++
+server.js
+---------
+const express = require("express");
+const app = express();
+app.use(express.static(__dirname));
+app.get("/", (req, res) => { res.sendFile(__dirname+"/step16-using-modules.html")});
+app.listen(1010);
+console.log("server is now live on localhost : 1010");
