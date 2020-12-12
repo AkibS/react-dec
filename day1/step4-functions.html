@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // function adder(num1, num2){
+        //     let n1 = num1 || 0;
+        //     let n2 = num2 || 0;
+        //     return n1 + n2
+        // };
+        // console.log( adder(5,6) );
+
+    // DEFAULT PARAMS
+        /*
+        function adder(num1 = 0, num2 = 0){
+            return num1 + num2;
+        };
+        console.log( adder(5) );
+       */
+        
+    //    function adder(){
+    //        let total = 0;
+    //        for( let i = 0; i < arguments.length; i++){
+    //            total += arguments[i];
+    //        }
+    //       return total;
+    //    };
+    //    console.log( adder(5, 6, 7, 8, 9, 10 ) );
+
+    // REST ARGUMENTS 
+       function adder(...nums){
+           let total = 0;
+           /*
+           for( let i = 0; i < nums.length; i++){
+               total += nums[i];
+           }
+           */
+           nums.forEach(function(val){
+                total += val;
+           })
+          return total;
+       };
+       let arr = [5, 6, 7, 8, 9, 10];
+       // SPREAD
+       // console.log( adder( arr[0], arr[1], arr[2], arr[3], arr[4], arr[5] ) );
+       console.log( adder( ...arr ) );
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

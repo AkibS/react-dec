@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--script id="temp" type="vijay-template">
+        <div class="box">
+            <h1>Captain America</h1>  
+            <h2>Steve Rogers</h2> 
+            <input type="range" value="8" min="0" max="10" step="1"/> 
+        </div>
+    </script-->
+    <style>
+        .container .box{
+            width: 300px;
+            height: 150px;
+            background-color: lightslategrey;
+            border: 1px solid darkslategray;
+            float: left;
+            margin: 10px;
+        }
+        .container .box h1, h2{
+           color: darkslategray;
+           font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+           text-align: center;
+        }
+        .container .box input{
+            width: 290px;
+        }
+    </style>
+    <script>
+         let heroes = [
+             {
+                 title: "Ironman",
+                 firstname: "Tony",
+                 lastname: "Stark",
+                 power: 7
+             },
+             {
+                 title: "Spiderman",
+                 firstname: "Peter",
+                 lastname: "Parker",
+                 power: 6
+             },
+             {
+                 title: "Captain America",
+                 firstname: "Steve",
+                 lastname: "Rogers",
+                 power: 8
+             }
+         ]
+        window.onload = function(){
+            heroes.forEach((val) => {
+                document.getElementsByClassName("container")[0].innerHTML += ` 
+                        <div class="box">
+                        <h1>${ val.title }</h1>  
+                        <h2>${ val.firstname +' '+ val.lastname }</h2> 
+                        <input type="range" value="${ val.power }" min="0" max="10" step="1"/> 
+                        </div>`
+            })
+        }
+    </script>
+</head>
+<body>
+    <div class="container"></div>
+</body>
+</html>

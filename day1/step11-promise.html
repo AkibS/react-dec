@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let promise = new Promise(function(resolve, reject){
+            setTimeout( function(){
+                if(true){
+                    resolve("Promise was Resolved")
+                }else{
+                    reject("Promise was Rejected")
+                }
+            }, 2000 )
+        });
+        promise.then( function(res){
+                console.log("First Then Resolve : ",res);
+                return res.toUpperCase();
+            }).then(function(res){
+                console.log("Second Then Resolve : ",res);
+                return res.toLowerCase();
+            }).then(function(res){
+                console.log("Third Then Resolve : ",res)
+            }).catch(function(error){
+            console.log("Eror from Catch : ", error)
+        });
+        console.log("line no 26");
+        console.log("line no 27");
+        console.log("line no 28");
+        console.log("line no 29");
+    </script>
+</head>
+<body>
+
+</body>
+</html>

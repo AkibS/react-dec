@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let ironman = {
+            title : "Ironman",
+            firstname : "Tony",
+            lastname : "Stark",
+            power : 7,
+            fullname : function(city, message){
+                return message+" "+this.firstname+" "+this.lastname+" from "+city;
+            }
+        };
+        let spiderman = {
+            title : "Spiderman",
+            firstname : "Peter",
+            lastname : "Parker",
+            power : 6
+        };
+        let captainAmerica = {
+            title : "Captain America",
+            firstname : "Steve",
+            lastname : "Rogers",
+            power : 8
+        };
+        console.log(ironman.fullname("Hey", "Love you 3000"));// 
+
+        /*
+        */
+        console.log(ironman.fullname.call(spiderman, "with great powers comes great responsibility", "New York"));// 
+        console.log(ironman.fullname.call(captainAmerica, "I can do it all day", "New York"));// 
+
+        /*
+        */
+        console.log(ironman.fullname.apply(spiderman, ["with great powers comes great responsibility", "New York"]));// 
+        console.log(ironman.fullname.apply(captainAmerica, ["I can do it all day", "New York"]));// 
+
+        /*
+        */
+        let spidermanFullname = ironman.fullname.bind(spiderman);// 
+        let captainAmericaFullname = ironman.fullname.bind(captainAmerica);// 
+        spidermanFullname("with great powers comes great responsibility", "New York");
+        captainAmericaFullname("I can do it all day", "New York");
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

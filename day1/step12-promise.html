@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+            let asyncCall2 = function () {
+                return new Promise(function (resolve, reject) {
+                    setTimeout(function () {
+                        if (true) {
+                            resolve("Promise was Resolved from asyncCall2")
+                        } else {
+                            reject("Promise was Rejected from asyncCall2")
+                        }
+                    }, 2000)
+                });
+            };
+            let asyncCall1 = function () {
+                return new Promise(function (resolve, reject) {
+                    setTimeout(function () {
+                        if (false) {
+                            resolve(asyncCall2());
+                        } else {
+                            reject("Promise was Rejected from asyncCall1")
+                        }
+                    }, 2000)
+                });
+            }
+        
+        asyncCall1().then(
+            function(res){
+                console.log(res);
+            },
+            function(error){
+                console.log(error);
+            }            
+            )
+    </script>
+</head>
+<body>
+
+</body>
+</html>

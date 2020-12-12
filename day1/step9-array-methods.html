@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let arr = [7,4,2,6,9,11,61,51,72];
+        //------------------------------------
+        // Native Loop
+        // for(let i = 0 ; i < arr.length; i++){
+        //     console.log(arr[i] * 2)
+        // };
+        //------------------------------------
+        // ForEach method of Array
+        // arr.forEach(function(val, idx, arr){
+        //     console.log(val)
+        // });
+        //------------------------------------
+        // Map 
+        // let doubleIt = arr.map(function(val, idx, arr){
+        //     return val * 2
+        // });
+        // console.log(arr, doubleIt)
+        //------------------------------------
+        
+        // Filter
+        // let moreThan10 = arr.filter(function(val, idx, arr){
+        //     return val > 10;
+        // });
+        // console.log(arr, moreThan10);
+        //------------------------------------
+
+        // Every
+        // let greaterThan10 = arr.every(function(val, idx, arr){
+        //     return val < 100 ;
+        // });
+        // console.log(arr, greaterThan10);
+
+        // Some
+        // let lessThan10 = arr.some(function(val, idx, arr){
+        //     return val < 10 ;
+        // });
+        // console.log(arr, lessThan10);
+
+        // Reduce
+        // let totalScore = arr.reduce(function(init, val, idx, arr){
+        let totalScore = arr.reduceRight(function(init, val, idx, arr){
+            console.log(val);
+            return init + val
+        }, 0);
+        console.log(arr, totalScore);
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

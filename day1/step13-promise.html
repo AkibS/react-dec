@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+            let asyncCall2 = function () {
+                return new Promise(function (resolve, reject) {
+                    setTimeout(function () {
+                        if (true) {
+                            resolve("Promise was Resolved from asyncCall2")
+                        } else {
+                            reject("Promise was Rejected from asyncCall2")
+                        }
+                    }, 2000)
+                });
+            };
+            let asyncCall1 = function () {
+                return new Promise(function (resolve, reject) {
+                    setTimeout(function () {
+                        if (false) {
+                            resolve("Promise was Resolved from asyncCall1")
+                        } else {
+                            reject("Promise was Rejected from asyncCall1")
+                        }
+                    }, 1000)
+                });
+            }
+            let asyncCall3 = function () {
+                return new Promise(function (resolve, reject) {
+                    setTimeout(function () {
+                        if (true) {
+                            resolve("Promise was Resolved from asyncCall3")
+                        } else {
+                            reject("Promise was Rejected from asyncCall3")
+                        }
+                    }, 3000)
+                });
+            }
+        
+    //   Promise.all([asyncCall1(), asyncCall2(), asyncCall3()]).then(function(result){
+    //     console.log(result);
+    //   }).catch(function(error){
+    //     console.log("Catch's Error : ", error)
+    //   });
+
+    // Promise.race([asyncCall2(), asyncCall1(), asyncCall3()]).then(function(result){
+    //     console.log(result);
+    // }).catch(function(error){
+    //     console.log("Catch's Error : ", error)
+    // });
+
+        Promise.any([asyncCall2(), asyncCall1(), asyncCall3()]).then(function(result){
+            console.log(result);
+        }).catch(function(error){
+            console.log("Catch's Error : ", error)
+        });
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var hero = {
+            title : "Ironman",
+            power : 6
+        };
+        function checkPower(){
+            if(hero.power > 5){
+             const tempTitle = hero.title+" is strong";
+                hero.title = tempTitle;
+                console.log(tempTitle);
+            }
+        };
+        checkPower();
+        window.onload = function(){
+            document.getElementById("log").innerText = hero.title;
+        }
+    </script>
+</head>
+<body>
+    <h1 id="log"></h1>
+</body>
+</html>
