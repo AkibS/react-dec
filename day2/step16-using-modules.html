@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="module">
+        import { Hero } from "./classes/hero.js";
+        var hero = new Hero(6,"Gotham", "Bruce", "Wayne", "What doesnot kill you makes you stronger");
+        var hero1 = new Hero(7,"New York", "Tony", "Stark", "Love you 3000");
+        console.log(hero.city);
+        console.log(hero.power);
+        console.log(hero.fullname());
+        console.log("*********************************");
+        console.log(hero1.city);
+        console.log(hero1.power);
+        console.log(hero1.fullname());
+        console.log("*********************************");
+        console.log(hero.fullname === hero1.fullname);
+        console.log(Hero.canRun());
+        console.log(Hero.canFly);
+        console.log(hero.saymessage());
+        console.log(hero1.saymessage());
+    </script>
+</head>
+<body>
+    <h1>using modules</h1>
+</body>
+</html>

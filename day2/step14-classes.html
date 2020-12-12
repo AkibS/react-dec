@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function Hero(pow, cty, fname, lname){
+            this.power = pow;
+            this.city = cty;
+            this._firstname = fname;
+            this._lastname = lname;
+        };
+        Hero.prototype.fullname = function(){
+            return this._firstname+" "+this._lastname;
+        };
+        var hero = new Hero(6,"Gotham", "Bruce", "Wayne");
+        var hero1 = new Hero(7,"New York", "Tony", "Stark");
+        console.log(hero.city);
+        console.log(hero.power);
+        console.log(hero.fullname());
+        console.log("*********************************");
+        console.log(hero1.city);
+        console.log(hero1.power);
+        console.log(hero1.fullname());
+        console.log("*********************************");
+        console.log(hero.fullname === hero1.fullname);
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

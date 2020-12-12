@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // ES5 - 6
+        // class Hero{
+        //     constructor(pow, cty, fname, lname){
+        //         this.canTalk = true;
+        //         this.power = pow;
+        //         this.city = cty;
+        //         this._firstname = fname;
+        //         this._lastname = lname;
+        //     }
+        //     fullname(){
+        //         return this._firstname+" "+this._lastname;
+        //     }
+        // }
+
+        class Person{
+            constructor(msg){
+                this.message = msg;
+            }
+            saymessage(){
+                return this.message.toUpperCase();
+            }
+        }
+        // ES 7
+        class Hero extends Person{
+            canTalk = true;
+            power;
+            city;
+            _firstname;
+            _lastname;
+            static canFly = true;
+            constructor(pow, cty, fname, lname, msg){
+                super(msg);
+                this.power = pow;
+                this.city = cty;
+                this._firstname = fname;
+                this._lastname = lname;
+            }
+            static canRun(){
+                return "yes i can run";
+            }
+            fullname(){
+                return this._firstname+" "+this._lastname;
+            }
+            get firstname(){
+                return this._firstname;
+            }
+            set firstname(nfirstname){
+                this._firstname = nfirstname;
+            }
+        }
+
+        var hero = new Hero(6,"Gotham", "Bruce", "Wayne", "What doesnot kill you makes you stronger");
+        var hero1 = new Hero(7,"New York", "Tony", "Stark", "Love you 3000");
+        console.log(hero.city);
+        console.log(hero.power);
+        console.log(hero.fullname());
+        console.log("*********************************");
+        console.log(hero1.city);
+        console.log(hero1.power);
+        console.log(hero1.fullname());
+        console.log("*********************************");
+        console.log(hero.fullname === hero1.fullname);
+        console.log(Hero.canRun());
+        console.log(Hero.canFly);
+        console.log(hero.message);
+        console.log(hero1.saymessage());
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
