@@ -14,3 +14,7 @@ app.use(express.static(__dirname));
 app.get("/", (req, res) => { res.sendFile(__dirname+"/step16-using-modules.html")});
 app.listen(1010);
 console.log("server is now live on localhost : 1010");
+
+
+let avengers = ['Ironman', 'Spiderman', 'Hulk', 'Doctor Strange', 'Black Panther'];
+let justiceLeague = ['Batman', 'Aquaman', 'Wonderwomen', 'Robin', 'Superman', 'Flash', 'Cyborg'];
