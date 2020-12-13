@@ -43,3 +43,7 @@ error
   getDerivedStateFromError
   componentDidCatch
 */
+
+
+
+https://pastebin.com/n5sJZFpS
