@@ -18,3 +18,28 @@ console.log("server is now live on localhost : 1010");
 
 let avengers = ['Ironman', 'Spiderman', 'Hulk', 'Doctor Strange', 'Black Panther'];
 let justiceLeague = ['Batman', 'Aquaman', 'Wonderwomen', 'Robin', 'Superman', 'Flash', 'Cyborg'];
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+/*
+creation / mounting
+  constructor
+  getDerivedStateFromProps (static)
+  render
+  componentDidMount
+
+updation / update
+  getDerivedStateFromProps (static)
+  shouldComponentUpdate
+  render
+  getSnapshotBeforeUpdate
+  componentDidUpdate
+
+deletion / unmounting
+  componentWillUnmount
+
+error
+  getDerivedStateFromError
+  componentDidCatch
+*/
