@@ -1,44 +1,99 @@
-import { Component } from "react";
+let express = require("express"),
+cors = require("cors"),
+mongoose = require("mongoose"),
+bodyparser = require("body-parser");
 
-export default class RegComp extends Component{
-    render(){
-        return <div>
-                    <h1> Power now is : { this.props.pow }</h1>
-               </div>
-    }
+let app = express();
+let handleErrors = function(err){
+    console.log("Error : ",err)
 }
-
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-
-
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import RegComp from './regularcomp';
-
-class MainApp extends Component{
-  constructor(){
-    super()
-    this.state = {
-      title : "Batman",
-      power : 5
+//----------------------
+    app.use(cors());
+    app.use(bodyparser.json());
+//----------------------
+let Schema = mongoose.Schema;
+let  ObjectId = Schema.ObjectId;
+let Hero = mongoose.model("Hero", new Schema({
+    id : ObjectId,
+    firstname : String, 
+    lastname : String, 
+    power : Number, 
+    city : String
+}));
+mongoose.Promise = global.Promise;
+let dataurl = "mongodb://127.0.0.1:27017/continuum";
+// let dataurl = "mongodb+srv://test:test@cluster0.a136x.mongodb.net/continuum?retryWrites=true&w=majority";
+mongoose.connect(dataurl, { useNewUrlParser: true,  useUnifiedTopology: true }).then(
+    () => {
+        console.log("DB Connected")
+    },
+    (error) => {
+        handleErrors(error);
     }
-  }
-  increasePower = () =>{
-    this.setState({
-      power : this.state.power+1
-    })
-  }
-  render(){
-    return <div>
-            <h1> Hero's Power is : { this.state.power } </h1>
-            <button onClick={ this.increasePower }> Click Me </button>
-            <hr/>
-            <RegComp pow={ this.state.power }/>
-          </div>
-  }
-}
-
-ReactDOM.render(<MainApp/>,
-  document.getElementById('root')
 );
+//----------------------
+// READ
+app.get("/data", function(req, res){
+    Hero.find( function(error, hero){
+        if(error){
+            handleErrors(error);
+        }else{
+            res.json(hero);
+        }
+    })
+})
+// CREATE
+app.post("/data", function(req, res){
+    let hero = new Hero(req.body);
+    hero.save().then(
+        () => {
+            res.status(200).send("Hero was added in to Database");
+        },
+        (error) => {
+            handleErrors(error);
+            res.status(400).send("Database update failed");
+        }
+    )
+})
+// DELETE
+app.delete('/delete/:id', function(req, res){
+    Hero.findByIdAndDelete({ _id : req.body.id }, function(error, hero){
+        if(error){
+            handleErrors(error);
+        }else{
+            res.send("Hero Removed");
+        }
+    })
+})
+// REQUEST TO UPDATE
+app.get("edit/:id", function(req, res){
+    Hero.findById(req.params.id, function(error, hero){
+        if(error){
+            handleErrors(error);
+        }else{
+            res.json(hero);
+        }
+    })
+});
+// UPDATE
+app.post("/edit/:id", function(req, res){
+    Hero.findById(req.params.id, function(error, hero){
+        hero.firstname = req.body.firstname; 
+        hero.lastname = req.body.lastname; 
+        hero.power = req.body.power; 
+        hero.city = req.body.city; 
+        hero.save().then( hero => {
+            res.json(hero);
+        }).catch( () => {
+            res.status(400).send("Unable to save the hero");
+        })
+    })
+});
+//----------------------
+app.listen(2525, "localhost", function(error){
+    if(error){
+        console.log("Error : ", error);
+    }else{
+        console.log("server is now live on localhost:2525");
+    }
+})
