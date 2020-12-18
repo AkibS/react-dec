@@ -1,0 +1,44 @@
+import { Component } from "react";
+
+export default class RegComp extends Component{
+    render(){
+        return <div>
+                    <h1> Power now is : { this.props.pow }</h1>
+               </div>
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import RegComp from './regularcomp';
+
+class MainApp extends Component{
+  constructor(){
+    super()
+    this.state = {
+      title : "Batman",
+      power : 5
+    }
+  }
+  increasePower = () =>{
+    this.setState({
+      power : this.state.power+1
+    })
+  }
+  render(){
+    return <div>
+            <h1> Hero's Power is : { this.state.power } </h1>
+            <button onClick={ this.increasePower }> Click Me </button>
+            <hr/>
+            <RegComp pow={ this.state.power }/>
+          </div>
+  }
+}
+
+ReactDOM.render(<MainApp/>,
+  document.getElementById('root')
+);
