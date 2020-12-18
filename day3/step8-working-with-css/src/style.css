@@ -1,0 +1,9 @@
+.player{
+   color: aqua;
+   background: darkgreen;
+   font-family: 'Trebuchet MS';
+   padding: 10px;
+   text-align: center;
+   border-radius: 20px;
+   border: 2px solid gray;
+}

@@ -1,0 +1,19 @@
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+
+class MainApp extends Component{
+  constructor(){
+    super()
+    this.state = {
+      title : "Batman"
+    }
+  }
+
+  render(){
+    return <h1> Welcome to your life </h1>
+  }
+}
+
+ReactDOM.render(<MainApp/>,
+  document.getElementById('root')
+);
