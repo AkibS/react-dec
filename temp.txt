@@ -21,8 +21,8 @@ let Hero = mongoose.model("Hero", new Schema({
     city : String
 }));
 mongoose.Promise = global.Promise;
-let dataurl = "mongodb://127.0.0.1:27017/continuum";
-// let dataurl = "mongodb+srv://test:test@cluster0.a136x.mongodb.net/continuum?retryWrites=true&w=majority";
+// let dataurl = "mongodb://127.0.0.1:27017/continuum";
+let dataurl = "mongodb+srv://test:test@cluster0.a136x.mongodb.net/continuum?retryWrites=true&w=majority";
 mongoose.connect(dataurl, { useNewUrlParser: true,  useUnifiedTopology: true }).then(
     () => {
         console.log("DB Connected")
@@ -41,7 +41,7 @@ app.get("/data", function(req, res){
             res.json(hero);
         }
     })
-})
+});
 // CREATE
 app.post("/data", function(req, res){
     let hero = new Hero(req.body);
@@ -54,19 +54,20 @@ app.post("/data", function(req, res){
             res.status(400).send("Database update failed");
         }
     )
-})
+});
 // DELETE
 app.delete('/delete/:id', function(req, res){
-    Hero.findByIdAndDelete({ _id : req.body.id }, function(error, hero){
+    Hero.findByIdAndDelete({ _id : req.params.id }, function(error, hero){
         if(error){
             handleErrors(error);
         }else{
             res.send("Hero Removed");
         }
     })
-})
+});
 // REQUEST TO UPDATE
-app.get("edit/:id", function(req, res){
+app.get("/edit/:id", function(req, res){
+    console.log(req.params.id);
     Hero.findById(req.params.id, function(error, hero){
         if(error){
             handleErrors(error);
@@ -97,3 +98,254 @@ app.listen(2525, "localhost", function(error){
         console.log("server is now live on localhost:2525");
     }
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+import { Component } from "react";
+import axios from 'axios';
+
+class Herolist extends Component {
+  constructor() {
+    super();
+    this.state = {
+      title: "Heroes List Application",
+      heroeslist: [],
+      herofirstname: "",
+      herolastname: "",
+      heropower: "",
+      herocity: "",
+      edit_firstname: "",
+      edit_lastname: "",
+      edit_power: "",
+      edit_city: "",
+      edit_id: "",
+      showEditBox : false
+    };
+  }
+  // READ REQUEST
+  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  componentDidMount(){
+    this.reload();
+  };
+  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  // RELOAD DATA
+    reload = () => {
+      axios
+        .get("http://localhost:2525/data")
+        .then((res) => {
+          this.setState({
+            heroeslist: res.data,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  // CREATE HERO EVENTS
+  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  firstnameChangeHandler = (evt) => {
+    this.setState({
+      herofirstname: evt.target.value,
+    });
+  };
+  lastnameChangeHandler = (evt) => {
+    this.setState({
+      herolastname: evt.target.value,
+    });
+  };
+  powerChangeHandler = (evt) => {
+    this.setState({
+      heropower: evt.target.value,
+    });
+  };
+  cityChangeHandler = (evt) => {
+    this.setState({
+      herocity: evt.target.value,
+    });
+  };
+  submitHandler = (evt) => {
+    evt.preventDefault();
+    axios
+      .post("http://localhost:2525/data", {
+        firstname: this.state.herofirstname,
+        lastname: this.state.herolastname,
+        power: this.state.heropower,
+        city: this.state.herocity,
+      })
+      .then((res) => {
+        console.log(res);
+        this.reload();
+        this.setState({
+          herofirstname: "",
+          herolastname: "",
+          heropower: "",
+          herocity: "",
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  // EDIT EVENT HANDLER
+  edit_firstnameChangeHandler = (evt)=>{
+    this.setState({
+      edit_firstname : evt.target.value
+    });
+  }
+  edit_lastnameChangeHandler = (evt)=>{
+    this.setState({
+      edit_lastname : evt.target.value
+    });
+  }
+  edit_powerChangeHandler = (evt)=>{
+    this.setState({
+      edit_power : evt.target.value
+    });
+  }
+  edit_cityChangeHandler = (evt)=>{
+    this.setState({
+      edit_city : evt.target.value
+    });
+  }
+  editHandler = (args) =>{
+    console.log(args);
+
+    axios.get("http://localhost:2525/edit/"+args).then( res => {
+        this.setState({
+          edit_firstname : res.data.firstname,
+          edit_lastname : res.data.lastname,
+          edit_power : res.data.power,
+          edit_city : res.data.city,
+          edit_id : res.data._id,
+          showEditBox : true
+        })
+    })
+ }
+  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  // SUBMIT AFTER EDIT
+  submitEditedHero = (evt)=>{
+    evt.preventDefault();
+    axios.post("http://localhost:2525/edit/"+this.state.edit_id, {
+        firstname : this.state.edit_firstname,
+        lastname : this.state.edit_lastname,
+        power : this.state.edit_power,
+        city : this.state.edit_city
+    }).then( res => {
+      console.log(res);
+        this.reload();
+        this.setState({
+          edit_firstname : "",
+          edit_lastname : "",
+          edit_power : "",
+          edit_city : "",
+          edit_id : "",
+          showEditBox : false
+       })
+    })
+}
+  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  // DELETE
+  deleteHandler = (args) =>{
+    axios.delete("http://localhost:2525/delete/"+args).then( (res) => {
+        this.reload();
+    })
+  }
+  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  render() {
+    return (
+      <div className="container">
+        <h1 className="text-center">{this.state.title}</h1>
+        <form onSubmit={this.submitHandler} action="#">
+          <div>
+          <label className="form-label" htmlFor="hfname">Hero First Name : </label>
+          <input className="form-control" id="hfname" value={this.state.herofirstname} onChange={this.firstnameChangeHandler} />
+          </div>
+          <div>
+          <label className="form-label" htmlFor="hlname">Hero Last Name : </label>
+          <input className="form-control" id="hlname" value={this.state.herolastname} onChange={this.lastnameChangeHandler} />
+          </div>
+          <div>
+          <label className="form-label" htmlFor="hpower">Hero Power : </label>
+          <input className="form-control" id="hpower" value={this.state.heropower} onChange={this.powerChangeHandler}/>
+          </div>
+          <div>
+          <label className="form-label" htmlFor="hcity">Hero City : </label>
+          <input className="form-control" id="hcity" value={this.state.herocity} onChange={this.cityChangeHandler} />
+          </div>
+          <br />
+          <button type="button" className="btn btn-primary" type="submit">Create Hero</button>
+        </form>
+        <hr />
+        { this.state.showEditBox &&  <div> 
+          <h1>Edit Hero</h1>
+        <form onSubmit={this.submitEditedHero} action="#">
+        <div>
+          <label  className="form-label" htmlFor="hefname">Hero First Name : </label>
+          <input  className="form-control" id="hefname" value={this.state.edit_firstname} onChange={this.edit_firstnameChangeHandler} />
+        </div>
+        <div>
+          <label  className="form-label" htmlFor="helname">Hero Last Name : </label>
+          <input  className="form-control" id="helname" value={this.state.edit_lastname} onChange={this.edit_lastnameChangeHandler} />
+        </div>
+        <div>
+          <label  className="form-label" htmlFor="hepower">Hero Power : </label>
+          <input  className="form-control" id="hepower" value={this.state.edit_power} onChange={this.edit_powerChangeHandler}/>
+        </div>
+        <div>
+          <label  className="form-label" htmlFor="hecity">Hero City : </label>
+          <input  className="form-control" id="hecity" value={this.state.edit_city}  onChange={this.edit_cityChangeHandler} />
+        </div>
+        <br />
+          <button type="submit">Update Hero</button>
+        </form>
+        <hr />  
+        </div> }
+        <ol>
+          {this.state.heroeslist.map((val, idx) => {
+            return (
+              <li key={idx}>
+                First Name : {val.firstname} | 
+                Last Name : {val.lastname} | 
+                Power : {val.power} | 
+                City : {val.city}
+                
+                &nbsp;
+                &nbsp;
+                <button type="button" className="btn btn-warning" onClick={() => { this.editHandler(val._id);  }} >
+                  Edit Hero
+                </button>
+                &nbsp;
+                &nbsp;
+                <button type="button" className="btn btn-danger" onClick={() => { this.deleteHandler(val._id); }} >  
+                Delete Hero 
+                </button>
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+    );
+  }
+}
+
+export default Herolist;
